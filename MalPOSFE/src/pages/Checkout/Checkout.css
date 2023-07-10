@@ -1,0 +1,12 @@
+.pop-out-button {
+  transform: scale(1);
+  transition: transform 0.2s;
+}
+
+.pop-out-button:hover {
+  transform: scale(1.1);
+}
+
+.cus-margin {
+  margin-left: auto;
+}
