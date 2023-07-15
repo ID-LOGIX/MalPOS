@@ -13,6 +13,11 @@
           "text": "Users"
         },
         {
+          "href": "/roles",
+          "icon": "palette",
+          "text": "Roles"
+        },
+        {
           "href": "/clients",
           "icon": "text_fields",
           "text": "Clients"

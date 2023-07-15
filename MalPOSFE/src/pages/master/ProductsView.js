@@ -15,6 +15,7 @@ import {
   faB,
   faBars,
   faGear,
+  faHandHoldingDollar,
   faHome,
   faSearch,
   faStar,
@@ -30,6 +31,8 @@ import Header from "../../layouts/Header";
 import LayoutWithoutSidebar from "../../layouts/LayoutWithoutSidebar";
 
 import api from "../../api/baseUrl";
+import DiscountModel from "../../components/popupsModel/DiscountModel";
+import "./customModal.css";
 
 export default function ProductsView() {
   const [categories, setCategories] = useState([]);
@@ -38,6 +41,9 @@ export default function ProductsView() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
+  const [discount, setDiscount] = useState("");
+  const [unit, setUnit] = useState("%");
   const location = useLocation();
 
   const getAllCategories = async () => {
@@ -65,6 +71,11 @@ export default function ProductsView() {
     setSelectedCategory(null);
   };
 
+  // Function to handle modal open/close
+  const toggleDiscountModal = () => {
+    setIsDiscountModalOpen(!isDiscountModalOpen);
+  };
+
   const handleProductSelected = (product) => {
     setSelectedProduct((prevProducts) => {
       const existingProduct = prevProducts.find(
@@ -82,6 +93,14 @@ export default function ProductsView() {
         return [...prevProducts, { ...product, qty: 1 }];
       }
     });
+  };
+
+  const handleDiscountChange = (newDiscount) => {
+    setDiscount(newDiscount);
+  };
+
+  const handleUnitChange = (newUnit) => {
+    setUnit(newUnit);
   };
   const increaseQty = (id) => {
     setSelectedProduct((prevProducts) =>
@@ -143,6 +162,8 @@ export default function ProductsView() {
                     clearCart={clearCart}
                     increaseQty={increaseQty}
                     decreaseQty={decreaseQty}
+                    discount={discount}
+                    unit={unit}
                   />
                 ) : (
                   <h2>Empty Cart</h2>
@@ -186,12 +207,17 @@ export default function ProductsView() {
                       </Modal>
                       <Button
                         className={"logo-btn-p"}
+                        style={{ cursor: "pointer" }}
                         onClick={handleBackToCategories}
                       >
                         <FontAwesomeIcon icon={faArrowLeft} />
                       </Button>
-                      <Button className={"logo-btn-p"}>
-                        <FontAwesomeIcon icon={faGear} />
+                      <Button
+                        className={"logo-btn-p"}
+                        style={{ cursor: "pointer" }}
+                        onClick={toggleDiscountModal}
+                      >
+                        <FontAwesomeIcon icon={faHandHoldingDollar} />
                       </Button>
                       <Button className={"logo-btn-p"}>
                         <FontAwesomeIcon icon={faStar} />
@@ -201,6 +227,38 @@ export default function ProductsView() {
                       </Button>
                     </Box>
                   </Col>
+                  {/* 3. Create the Modal component in the render method with the title "Discount" */}
+                  <Modal
+                    show={isDiscountModalOpen}
+                    onHide={toggleDiscountModal}
+                    contentClassName="custom-modal-size"
+                  >
+                    <div>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Discount</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <DiscountModel
+                          discount={discount}
+                          unit={unit}
+                          onDiscountChange={handleDiscountChange}
+                          onUnitChange={handleUnitChange}
+                        />
+                      </Modal.Body>
+                    </div>
+                    <Modal.Footer className="pt-0">
+                      <Button
+                        className="btn btn-danger"
+                        style={{ backgroundColor: "salmon" }}
+                        onClick={toggleDiscountModal}
+                      >
+                        Close
+                      </Button>
+                      <Button variant="primary" onClick={toggleDiscountModal}>
+                        Apply Discount
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
                   <Col sm={12}>
                     {!selectedCategory && (
                       <Row

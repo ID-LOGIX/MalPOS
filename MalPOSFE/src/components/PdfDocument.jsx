@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import {
@@ -11,10 +11,6 @@ import {
   Font,
 } from "@react-pdf/renderer";
 
-// Font.register({
-//   family: "Oswald",
-//   src: "https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf",
-// });
 // Create styles
 const styles = StyleSheet.create({
   body: {
@@ -69,89 +65,92 @@ const styles = StyleSheet.create({
   },
 });
 
-const dummyData = [
-  {
-    product: "Product 1",
-    type: "Type 1",
-    period: "2019-02-20 - 2020-02-19",
-    price: "5€",
-  },
-  {
-    product: "Product 2",
-    type: "Type 2",
-    period: "2019-05-20 - 2020-07-19",
-    price: "25€",
-  },
-  // ... you can add more here
-];
-
 // Create Document Component
-const PdfDocument = () => (
-  <PDFViewer width="1000" height="600">
-    <Document>
-      <Page style={styles.body}>
-        <Text style={styles.title}>Sales Report</Text>
-        <View style={styles.table}>
-          <View style={styles.tableRow}>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>id</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Customer</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Order Type</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Order Amount</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Discount</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Payment Type</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Status</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>Date</Text>
-            </View>
-          </View>
+const PdfDocument = () => {
+  const [receipts, setReceipts] = useState([]);
 
-          {/* Dynamic rows */}
-          {dummyData.map((item, index) => (
-            <View style={styles.tableRow} key={index}>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{item.product}</Text>
+  const location = useLocation();
+  useEffect(() => {
+    setReceipts(location.state?.receipts);
+    console.log(receipts);
+  }, []);
+  return (
+    <PDFViewer width="1000" height="600">
+      <Document>
+        <Page style={styles.body}>
+          <Text style={styles.title}>Sales Report</Text>
+          <View style={styles.table}>
+            <View style={styles.tableRow}>
+              <View style={styles.tableColHeader}>
+                <Text style={styles.tableCellHeader}>id</Text>
               </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{item.type}</Text>
+              <View style={styles.tableColHeader}>
+                <Text style={styles.tableCellHeader}>Customer</Text>
               </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{item.period}</Text>
+              <View style={styles.tableColHeader}>
+                <Text style={styles.tableCellHeader}>Order Type</Text>
               </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{item.price}</Text>
+              <View style={styles.tableColHeader}>
+                <Text style={styles.tableCellHeader}>Order Amount</Text>
               </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{item.price}</Text>
+              <View style={styles.tableColHeader}>
+                <Text style={styles.tableCellHeader}>Discount</Text>
               </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{item.price}</Text>
+              <View style={styles.tableColHeader}>
+                <Text style={styles.tableCellHeader}>Payment Type</Text>
               </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{item.price}</Text>
+              <View style={styles.tableColHeader}>
+                <Text style={styles.tableCellHeader}>Status</Text>
               </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{item.price}</Text>
+              <View style={styles.tableColHeader}>
+                <Text style={styles.tableCellHeader}>Date</Text>
               </View>
             </View>
-          ))}
-        </View>
-      </Page>
-    </Document>
-  </PDFViewer>
-);
+
+            {/* Dynamic rows */}
+            {receipts.map((receipt, index) => (
+              <View style={styles.tableRow} key={index}>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>
+                    {receipt.td_sale_order_id}
+                  </Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{receipt.customer}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{receipt.order_type}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>
+                    {receipt
+                      ? parseFloat(parseFloat(receipt.order_amount).toFixed(2))
+                      : "N/A"}
+                  </Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{receipt.discount}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{receipt.payment_type}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{receipt.status}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>
+                    {receipt
+                      ? new Date(receipt.updated_at).toLocaleString()
+                      : "N/A"}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </Page>
+      </Document>
+    </PDFViewer>
+  );
+};
 
 export default PdfDocument;

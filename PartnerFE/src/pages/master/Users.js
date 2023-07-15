@@ -115,7 +115,7 @@ export default function Users() {
                               <td>{user.id}</td>
                               <td>{user.name}</td>
                               <td>{user.email}</td>
-                              <td>{user.role}</td>
+                              <td>{user.role.name}</td>
                               <td
                                 style={{
                                   color: user.is_active ? "green" : "red",

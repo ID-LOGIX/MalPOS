@@ -61,6 +61,14 @@
           ]
         },
         {
+          "icon": "currency_exchange",
+          "text": "Banks",
+          "submenu": [
+            { "href": "/banks", "text": "Banks" },
+            { "href": "/bank-account", "text": "Bank Accounts" }
+          ]
+        },
+        {
           "icon": "layers",
           "text": "Finances",
           "submenu": [

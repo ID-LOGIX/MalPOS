@@ -66,8 +66,10 @@ import Users from "./pages/master/Users";
 import UserCreate from "./pages/master/UserCreate";
 import Branches from "./pages/master/Branches";
 import CreateBranch from "./pages/master/CreateBranches";
+import Roles from "./pages/master/Roles";
 
 import RequireAuth from "./Guard/RequireAuth";
+import RoleCreate from "./pages/master/RoleCreate";
 
 export default function App() {
   return (
@@ -110,6 +112,7 @@ export default function App() {
                   </RequireAuth>
                 }
               />
+              <Route path="/roles" element={<RequireAuth><Roles/></RequireAuth>}/>
               <Route
                 path="/users"
                 element={
@@ -135,6 +138,17 @@ export default function App() {
                   </RequireAuth>
                 }
               />
+
+              <Route
+                path="/roles-create"
+                element={
+                  <RequireAuth>
+                    <RoleCreate />
+                  </RequireAuth>
+                }
+              />
+
+    
               <Route
                 path="/clients"
                 element={

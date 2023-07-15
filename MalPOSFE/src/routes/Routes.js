@@ -19,6 +19,7 @@ import SaleReports from "../pages/SaleReports/SaleReports";
 import CRM from "../pages/master/CRM";
 import RightSidebar from "../layouts/RightSideBar";
 import PdfDocument from "../components/PdfDocument";
+import ThermalInvoice from "../pages/ThermalInvoice/ThermalInvoice";
 
 const AllRoutes = () => {
   return (
@@ -45,6 +46,7 @@ const AllRoutes = () => {
         <Route path="/sale-reports" element={<SaleReports />} />
         <Route path="/report" element={<PdfDocument />} />
         <Route path="/crm" element={<CRM />} />
+        <Route path="/print-screen" element={<ThermalInvoice />} />
       </Routes>
     </BrowserRouter>
   );

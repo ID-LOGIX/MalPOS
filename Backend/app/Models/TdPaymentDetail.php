@@ -11,4 +11,8 @@ class TdPaymentDetail extends Model
     protected $primaryKey = 'td_payment_detail_id';
     protected $guarded = ['td_payment_detail_id'];
 
+    public function td_sale_order(){
+        return $this->belongsTo(TdSaleOrder::class, 'td_sale_order_id');
+    }
+
 }

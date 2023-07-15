@@ -4,11 +4,8 @@ import { Col, Row, Button } from "react-bootstrap";
 import {
   faEdit,
   faClock,
-  faAngleDown,
   faPlus,
-  faXmark,
   faMinus,
-  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -16,17 +13,21 @@ import { CardLayout } from "../../components/cards";
 import { Box } from "../../components/elements";
 import { Text } from "../../components/elements";
 import api from "../../api/baseUrl";
+import { useState } from "react";
 
 export default function ProductViewReceipt({
   products,
   deleteProduct,
   clearCart,
-  increaseQty, // New prop
-  decreaseQty, // New prop
+  increaseQty,
+  decreaseQty,
+  discount,
+  unit,
 }) {
   const location = useLocation();
   const navigate = useNavigate();
   const orderType = location.state?.service;
+  const [orderId, setOrderId] = useState("");
 
   const tax = 5; // Set the tax percentage
 
@@ -40,45 +41,48 @@ export default function ProductViewReceipt({
       total + Number(product.product_price) * product.qty * (tax / 100),
     0
   );
+  let discountedSubtotal = subtotal;
+  if (unit === "%") {
+    const discountAmount = (subtotal * Number(discount)) / 100;
+    discountedSubtotal = subtotal - discountAmount;
+  } else if (unit === "ریال") {
+    discountedSubtotal = subtotal - Number(discount);
+  }
 
-  const handleDelete = (id) => {
-    deleteProduct(id);
-  };
   const handleOrderSave = async () => {
-    navigate("/checkout", {
-      state: {
-        selectedProducts: products,
-        subtotal: subtotal + totalTax,
-        totalTax: totalTax,
-        orderType: orderType,
-      },
-    });
-    // const orderData = {
-    //   order_type: orderType?.toString() || "",
-    //   // payment_type: payment_type,
-    //   // discount: (discount || "").toString(),
-    //   order_amount: (subtotal + totalTax || "").toString(),
-    //   status: ("UnPaid" || "").toString(),
-    //   products: products.map((product) => ({
-    //     product_id: (product.md_product_id || "").toString(),
-    //     qty: (product.qty || "").toString(),
-    //     price: (product.price || "").toString(),
-    //   })),
-    // };
-    // try {
-    //   // Send the order data to the API
-    //   const response = await api.post("/save_order", orderData);
-    //   console.log("order", orderData);
-
-    //   if (response.status === 200) {
-    //     toast.success("Order has been save in draft!");
-    //     navigate("/orders-line"); // navigate to order-line page
-    //   } else {
-    //     console.error("Failed to save order.");
-    //   }
-    // } catch (error) {
-    //   toast.error("Something went wrong with your order.");
-    // }
+    const orderData = {
+      order_type: orderType?.toString() || "",
+      // payment_type: null,
+      discount: (`${discount} ${unit}` || "").toString(),
+      order_amount: (discountedSubtotal + totalTax || "").toString(),
+      status: ("UnPaid" || "").toString(),
+      paidAmount: [],
+      products: products.map((product) => ({
+        md_product_id: (product.md_product_id || "").toString(),
+        qty: (product.qty || "").toString(),
+        price: (product.product_price || "").toString(),
+      })),
+    };
+    try {
+      // Send the order data to the API
+      const response = await api.post("/save_order", orderData);
+      console.log(response);
+      const orderIdResponse = response.data.order[0].td_sale_order_id;
+      toast.success("Order has been save in draft!");
+      navigate("/checkout", {
+        state: {
+          selectedProducts: products,
+          subtotal: discountedSubtotal,
+          totalTax: totalTax,
+          orderType: orderType,
+          discount: discount,
+          unit: unit,
+          orderId: orderIdResponse, // Here
+        },
+      });
+    } catch (error) {
+      toast.error("Something went wrong with your order.");
+    }
   };
   const emptyCart = (
     <CardLayout>
@@ -129,14 +133,6 @@ export default function ProductViewReceipt({
                             </Text>{" "}
                           </Text>
                         </Col>
-                        {/* <Col md={4} className="d-flex justify-content-end">
-                          <FontAwesomeIcon
-                            icon={faTrashCan}
-                            color="red"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => handleDelete(product.md_product_id)}
-                          />{" "}
-                        </Col> */}
                         <Col md={4} className="d-flex justify-content-end">
                           <FontAwesomeIcon
                             icon={faMinus}
@@ -157,33 +153,27 @@ export default function ProductViewReceipt({
                   ))}
             </Box>
           </Col>
+          <Text className="py-0 mb-0">Tax: {totalTax}</Text>
+          <hr class="bg-danger border-2 border-top border-danger py-0 m-0"></hr>
           <Col md={6}>
-            Tax
+            Discount:
             <br />
-            {totalTax.toFixed(2)}
+            {unit !== "%" ? discount : "00"}
             <Text as="span" className={"bold secound-color"}>
               {" "}
-              ریال
-            </Text>
-          </Col>
-          <Col md={6}>
-            Total Before Tax
-            <br />
-            {subtotal.toFixed(2)}
-            <Text as="span" className={"bold secound-color"}>
-              {" "}
-              ریال
+              {unit === "%" ? `(${discount}%)` : "(0%)"}
             </Text>
           </Col>
           <Col md={6}>
             Total
             <br />
-            {(subtotal + totalTax).toFixed(2)}
+            {(discountedSubtotal + totalTax).toFixed(2)}
             <Text as="span" className={"bold secound-color"}>
               {" "}
               ریال
             </Text>
           </Col>
+
           <Row className="justify-content-between">
             <Col md={6}>
               <Button
