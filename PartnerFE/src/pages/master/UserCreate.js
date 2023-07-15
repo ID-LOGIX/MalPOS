@@ -16,10 +16,11 @@ export default function UserCreate() {
   const [clients, setClients] = useState([]);
   const [brands, setBrands] = useState([]);
   const [branches, setBranches] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [formData, setFormData] = useState({
     email: "",
     name: "",
-    role: "",
+    // role: "",
     password: "",
     cd_client_id: "",
     cd_brand_id: "",
@@ -52,11 +53,11 @@ export default function UserCreate() {
       try {
         const response = await axiosInstance.get(`/user_edit/${userId}`);
         const userData = response.data;
+        console.log(userData);
         setFormData({
           name: userData.name || "",
           email: userData.email || "",
           is_active: userData.is_active !== null ? userData.is_active : false,
-          role: userData.role || "",
           actions: userData.actions || "",
           created_by: userData.created_by || "",
           updated_by: userData.updated_by || "",
@@ -76,6 +77,17 @@ export default function UserCreate() {
       const res = await axiosInstance.get("/cdclient");
       const formattedData = formatData(res.data, "cd_client_id");
       setClients(formattedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchRoles = async () => {
+    try {
+      const res = await axiosInstance.get("/admin_roles");
+      const formattedData = formatData(res.data, "cd_role_id");
+      console.log();
+      setRoles(formattedData);
     } catch (error) {
       console.log(error);
     }
@@ -122,20 +134,29 @@ export default function UserCreate() {
     }));
   };
 
+  const handleRoleChange = (e) => {
+    setFormData((prevForm) => ({
+      ...prevForm,
+      cd_role_id: parseInt(e.target.value),
+    }));
+  };
+
   useEffect(() => {
     fetchUserData();
     fetchClients();
     fetchBranches();
     fetchBrands();
+    fetchRoles();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // console.log(updatedFormData);
     try {
       const updatedFormData = {
         ...formData,
       };
-
       let response;
 
       if (isUpdate) {
@@ -239,13 +260,12 @@ export default function UserCreate() {
                         />
 
                         <Col md={12}>
-                          <LabelField
-                            label="role"
-                            name="role"
-                            type="text"
-                            placeholder="Role"
-                            value={formData.role}
-                            onChange={handleChange}
+                          <SelectField
+                            label="Role"
+                            name="cd_role_id"
+                            options={roles}
+                            value={formData.cd_role_id}
+                            onChange={handleRoleChange}
                           />
                         </Col>
                       </Col>

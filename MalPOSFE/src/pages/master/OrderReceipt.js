@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-
+import React, { useState, useEffect } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Row, Col, Dropdown } from "react-bootstrap";
+
 import data from "../../data/receipts.json";
 import {
   Table,
@@ -10,11 +11,11 @@ import {
   Tr,
   Td,
 } from "../../components/elements/Table";
-import { Pagination, Breadcrumb } from "../../components";
+import { Breadcrumb } from "../../components";
 import { CardLayout } from "../../components/cards/";
 import PageLayout from "../../layouts/PageLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faInfo } from "@fortawesome/free-solid-svg-icons";
 import { Anchor, Box, Text, Button } from "../../components/elements";
 
 import CustomPagination from "../../components/CustomPagination";
@@ -22,7 +23,6 @@ import CustomSearch from "../../components/CustomSearch";
 import { useNavigate } from "react-router-dom";
 
 import api from "../../api/baseUrl";
-import { DrawerContext } from "../../context/RightDrawer";
 
 export default function OrderReceipt() {
   const navigate = useNavigate();
@@ -35,46 +35,26 @@ export default function OrderReceipt() {
   const [searchTerm, setSearchTerm] = useState("");
   const [perPage] = useState(5);
 
-  const { toggleFromRight, toggleDrawer } = useContext(DrawerContext);
-  // console.log("Sidebar: drawer =", drawer, "fromRight =", fromRight);
-
   const fetchAllReceipts = async () => {
     try {
       const response = await api.get("/order_receipts");
       setReceipts(response.data);
-      console.log(response.data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleGenerateReportClick = () => {
-    navigate("/report", { state: { receipts: currentReceipts } });
-  };
-
-  const getFilteredReceipts = () => {
-    return receipts.filter(
-      (receipt) =>
-        (paymentTypeFilter === "" ||
-          receipt.payment_type === paymentTypeFilter) &&
-        (orderTypeFilter === "" || receipt.order_type === orderTypeFilter) &&
-        (statusTypeFilter === "" || receipt.status === statusTypeFilter)
-    );
+    navigate("/report", { state: { receipts: receipts } });
   };
 
   //   Pagination Logic
-  const indexOfLastUser = currentPage * perPage;
-  const indexOfFirstUser = indexOfLastUser - perPage;
-  // const filteredReceipts = receipts.filter((receipt) =>
-  //   receipt.status.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-  const filteredReceipts = getFilteredReceipts().filter((receipt) =>
-    receipt.status.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const currentReceipts = filteredReceipts.slice(
-    indexOfFirstUser,
-    indexOfLastUser
+  const indexOfLastReceipt = currentPage * perPage;
+  const indexOfFirstReceipt = indexOfLastReceipt - perPage;
+  const currentReceipts = receipts.slice(
+    indexOfFirstReceipt,
+    indexOfLastReceipt
   );
 
   const paginate = (pageNumber) => {
@@ -82,7 +62,6 @@ export default function OrderReceipt() {
   };
 
   const handleEdit = (id) => {
-    console.log("dasda", id);
     navigate("/checkout", {
       state: {
         id: id,
@@ -91,10 +70,12 @@ export default function OrderReceipt() {
   };
 
   const handlePaymentTypeChange = async (paymentType) => {
+    console.log(paymentType);
     setPaymentTypeFilter(paymentType);
     try {
       const response = await api.get(`/order_receipts/${paymentType}`);
       setReceipts(response.data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -115,23 +96,11 @@ export default function OrderReceipt() {
     try {
       const response = await api.get(`/order_receipts/${statusType}`);
       setReceipts(response.data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const filteredReceiptsBox = receipts.filter(
-  //   (receipt) =>
-  //     receipt.status.toLowerCase().includes(searchTerm.toLowerCase()) &&
-  //     (paymentTypeFilter === "" ||
-  //       receipt.payment_type === paymentTypeFilter) &&
-  //     (orderTypeFilter === "" || receipt.order_type === orderTypeFilter)
-  // );
-
-  // const handleToggle = () => {
-  //   toggleFromRight();
-  //   toggleDrawer();
-  // };
 
   useEffect(() => {
     fetchAllReceipts();
@@ -230,6 +199,12 @@ export default function OrderReceipt() {
                   >
                     UnPaid
                   </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => handleStatusTypeChange("Closed")}
+                    active={statusTypeFilter === "Closed"}
+                  >
+                    Closed
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
@@ -266,17 +241,42 @@ export default function OrderReceipt() {
                       <Td>{receipt.customer}</Td>
                       <Td>{receipt.order_type}</Td>
                       <Td>{receipt.order_amount}</Td>
-                      <Td>{receipt.discount}</Td>
+                      <Td>{receipt.discount ? receipt.discount : "0.00"}</Td>
                       <Td>{receipt.payment_type}</Td>
                       <Td>
                         <p
                           className={
-                            receipt.status !== "UnPaid"
-                              ? "mc-table-badge green"
-                              : "mc-table-badge red"
+                            receipt.status === "Closed"
+                              ? "mc-table-badge red"
+                              : receipt.status === "UnPaid"
+                              ? "mc-table-badge yellow"
+                              : "mc-table-badge green"
                           }
                         >
-                          {receipt.status}
+                          {receipt.status === "Closed" ? (
+                            <span>
+                              {receipt.status}
+                              <OverlayTrigger
+                                placement="right"
+                                overlay={
+                                  <Tooltip id={`tooltip-right`}>
+                                    {receipt.cancel_reason}
+                                  </Tooltip>
+                                }
+                              >
+                                <FontAwesomeIcon
+                                  icon={faInfo}
+                                  style={{
+                                    marginLeft: "5px",
+                                    backgroundColor: "white",
+                                    color: "black",
+                                  }}
+                                />
+                              </OverlayTrigger>
+                            </span>
+                          ) : (
+                            receipt.status
+                          )}
                         </p>
                       </Td>
                       <Td>{receipt.created_at}</Td>
@@ -301,7 +301,7 @@ export default function OrderReceipt() {
             </Table>
             <CustomPagination
               perPage={perPage}
-              totalUsers={filteredReceipts.length}
+              totalUsers={receipts.length}
               paginate={paginate}
               currentPage={currentPage}
             />

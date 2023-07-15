@@ -42,7 +42,6 @@ export default function CreateTaxRate() {
     try {
       // Add Tax Category api endpoint here
       const res = await api.get("/tax_category");
-      console.log("API Response:", res);
       const formattedData = formatData(
         res.data.tax_category,
         "td_tax_category_id"
@@ -85,7 +84,6 @@ export default function CreateTaxRate() {
   };
 
   const handleTaxCategoryChange = (e) => {
-    console.log(taxCategories, "Chek");
     setFormData((prevForm) => ({
       ...prevForm,
       td_tax_category_id: parseInt(e.target.value),
@@ -106,7 +104,6 @@ export default function CreateTaxRate() {
       setIsUpdate(true);
       try {
         const response = await api.get(`/tax_rate_edit/${taxRateId}`);
-        console.log(response);
         const taxRateData = response.data;
         setFormData({
           name: taxRateData.name,
@@ -156,6 +153,7 @@ export default function CreateTaxRate() {
       } else {
         // Create request
         response = await api.post("/tax_rate_store", updatedFormData);
+        console.log(response);
         toast.success("Tax Rate created successfully", {
           autoClose: true,
         });

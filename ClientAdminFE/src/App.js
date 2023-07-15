@@ -142,6 +142,11 @@ import CreateBrand from "./newPages/Brands/CreateBrand";
 import RequireAuth from "./guard/RequireAuth";
 import CreateTaxCategory from "./components/newComponents/TaxCategory/CreateTaxCategory";
 import CreateTaxRate from "./components/newComponents/TaxRate/CreateTaxRate";
+import Reports from "./components/newComponents/FilterReports/Reports";
+import Banks from "./newPages/Banks/Banks";
+import CreateBank from "./newPages/Banks/CreateBank";
+import BankAccounts from "./newPages/BankAccounts/BankAccounts";
+import CreateBankAccount from "./newPages/BankAccounts/CreateBankAccount";
 
 export default function App() {
   return (
@@ -198,6 +203,46 @@ export default function App() {
                 element={
                   <RequireAuth>
                     <ProductGroups />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="report"
+                element={
+                  <RequireAuth>
+                    <Reports />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="banks"
+                element={
+                  <RequireAuth>
+                    <Banks />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="create-bank"
+                element={
+                  <RequireAuth>
+                    <CreateBank />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/bank-account"
+                element={
+                  <RequireAuth>
+                    <BankAccounts />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/create-bank-account"
+                element={
+                  <RequireAuth>
+                    <CreateBankAccount />
                   </RequireAuth>
                 }
               />

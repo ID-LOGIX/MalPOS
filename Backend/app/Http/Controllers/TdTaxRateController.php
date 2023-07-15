@@ -37,10 +37,12 @@ class TdTaxRateController extends Controller
     {
         //
         $data = new TdTaxRate();
-    
+
         $data->cd_brand_id = $request->cd_brand_id;
         $data->cd_branch_id = $request->cd_branch_id;
         $data->td_tax_category_id = $request->td_tax_category_id;
+        $data->name = $request->name;
+        $data->description = $request->description;
         $data->valid_form = $request->valid_form;
         $data->type = $request->type;
         $data->rate = $request->rate;
@@ -74,10 +76,12 @@ class TdTaxRateController extends Controller
     {
         //
         $data =  TdTaxRate::find($id);
-    
+
         $data->cd_brand_id = $request->cd_brand_id;
         $data->cd_branch_id = $request->cd_branch_id;
         $data->td_tax_category_id = $request->td_tax_category_id;
+        $data->name = $request->name;
+        $data->description = $request->description;
         $data->valid_form = $request->valid_form;
         $data->type = $request->type;
         $data->rate = $request->rate;

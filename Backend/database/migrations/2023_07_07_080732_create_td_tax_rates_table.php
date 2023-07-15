@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('cd_brand_id')->on('cd_brands');
             $table->foreignId('cd_branch_id')->on('cd_branchs');
             $table->foreignId('td_tax_category_id')->on('td_tax_categories');
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
             $table->string('valid_form');
             $table->string('type');
             $table->string('rate');

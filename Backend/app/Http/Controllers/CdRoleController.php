@@ -13,6 +13,8 @@ class CdRoleController extends Controller
     public function index()
     {
         //
+        $data =  CdRole::where('role_type', 'super_admin_role')->get();
+        return response()->json($data);
     }
 
     /**
@@ -29,6 +31,17 @@ class CdRoleController extends Controller
     public function store(Request $request)
     {
         //
+       // return $request;
+        $data = new CdRole();
+        $data->name = $request->name;
+        $data->description = $request->description;
+        $data->role_type = $request->role_type;
+        $data->is_active = $request->is_active;
+        $data->created_by = '1';
+        $data->updated_by = '1';
+        $data->save();
+
+        return response()->json($data);
     }
 
     /**
@@ -42,24 +55,39 @@ class CdRoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CdRole $cdRole)
+    public function edit( $id)
     {
         //
+        $data = CdRole::find($id);
+        return response()->json($data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CdRole $cdRole)
+    public function update(Request $request, $id)
     {
         //
+        $data =  CdRole::find($id);
+        $data->name = $request->name;
+        $data->description = $request->description;
+        $data->role_type = $request->role_type;
+        $data->is_active = $request->is_active;
+        $data->created_by = '1';
+        $data->updated_by = '1';
+        $data->save();
+
+        return response()->json($data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CdRole $cdRole)
+    public function destroy( $id)
     {
         //
+        $data = CdRole::find($id);
+        $data->delete();
+        return response()->json($data);
     }
 }

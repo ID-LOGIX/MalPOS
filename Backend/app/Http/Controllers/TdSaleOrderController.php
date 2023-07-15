@@ -31,11 +31,41 @@ class TdSaleOrderController extends Controller
      * Store a newly created resource in storage.
      */
 
-     public function receipt()
+     public function check_order_receipt($id){
+        $data =  TdSaleOrder::with('td_sale_order_item.md_product')->where('td_sale_order_id', $id)->get();
+        return response()->json($data);
+
+
+     }
+
+     public function receipt($filter  = null)
      {
          //
-         $data =  TdSaleOrder::all();
-         return response()->json($data);
+         if($filter != null){
+            $status =TdSaleOrder::where('status', $filter)->get();
+            $payment_type =TdSaleOrder::where('payment_type', $filter)->get();
+            $order_type =TdSaleOrder::where('order_type', $filter)->get();
+            if($status != '[]'){
+             $data = $status;
+             return response()->json($data);
+            }
+            if($payment_type != '[]'){
+                $data = $payment_type;
+                return response()->json($data);
+
+            }
+            if($order_type != '[]'){
+                $data = $order_type;
+                return response()->json($data);
+
+            }
+
+         }
+         else{
+            $data =  TdSaleOrder::all();
+            return response()->json($data);
+
+         }
 
 
      }
@@ -45,6 +75,7 @@ class TdSaleOrderController extends Controller
 
     public function store(Request $request)
 {
+
     $currentTimestamp = time();
     $currentDateTime = date('Y-m-d H:i:s', $currentTimestamp);
     $data = new TdSaleOrder();
@@ -54,6 +85,8 @@ class TdSaleOrderController extends Controller
     $data->order_type = $request->order_type;
     $data->payment_type = $request->payment_type;
     $data->order_amount = $request->order_amount;
+    $data->cancel_reason = $request->cancel_reason;
+    $data->cancel_comment = $request->cancel_comment;
     $data->time = $currentDateTime;
     $data->user_id = '1';
     $data->discount = $request->discount;
@@ -74,7 +107,7 @@ class TdSaleOrderController extends Controller
     foreach ($request->products as $product) {
         $orderDetails = new TdSaleOrderItem();
 
-        $orderDetails->product_id = $product['product_id'];
+        $orderDetails->md_product_id = $product['md_product_id'];
         $orderDetails->qty = $product['qty'];
         $orderDetails->price = $product['price'];
         $orderDetails->cd_client_id = '1';
@@ -83,26 +116,28 @@ class TdSaleOrderController extends Controller
         $orderDetails->is_active = '1';
         $orderDetails->created_by = '1';
         $orderDetails->updated_by = '1';
-        $orderDetails->order_id = $latestOrderId;
+        $orderDetails->td_sale_order_id = $latestOrderId;
         $orderDetails->save();
     }
 
-    foreach ($request->paidAmount as $item) {
-        $paymentDetails = new TdPaymentDetail();
+    if ($request->has('paidAmount') && is_array($request->paidAmount)) {
+        foreach ($request->paidAmount as $item) {
+            $paymentDetails = new TdPaymentDetail();
 
-        $paymentDetails->tender_type = $item['tender_type'];
-        $paymentDetails->payment_amount = $item['payment_amount'];
-        $paymentDetails->cd_client_id = '1';
-        $paymentDetails->cd_brand_id = '1';
-        $paymentDetails->cd_branch_id = '1';
-        $paymentDetails->is_active = '1';
-        $paymentDetails->created_by = '1';
-        $paymentDetails->updated_by = '1';
-        $paymentDetails->td_sale_order_id = $latestOrderId;
-        $paymentDetails->save();
+            $paymentDetails->tender_type = $item['tender_type'];
+            $paymentDetails->payment_amount = $item['payment_amount'];
+            $paymentDetails->cd_client_id = '1';
+            $paymentDetails->cd_brand_id = '1';
+            $paymentDetails->cd_branch_id = '1';
+            $paymentDetails->is_active = '1';
+            $paymentDetails->created_by = '1';
+            $paymentDetails->updated_by = '1';
+            $paymentDetails->td_sale_order_id = $latestOrderId;
+            $paymentDetails->save();
+        }
     }
-
-    return response()->json($data);
+       $order = TdSaleOrder::with('td_sale_order_item','td_payment_detail')->where('td_sale_order_id',$latestOrderId)->get();
+    return response()->json(['order'=>$order]);
 }
 
 
@@ -132,6 +167,7 @@ class TdSaleOrderController extends Controller
      */
     public function update(Request $request, $orderId)
     {
+
         $currentTimestamp = time();
         $currentDateTime = date('Y-m-d H:i:s', $currentTimestamp);
         $data = TdSaleOrder::findOrFail($orderId);
@@ -142,6 +178,8 @@ class TdSaleOrderController extends Controller
         $data->order_type = $request->order_type;
         $data->payment_type = $request->payment_type;
         $data->order_amount = $request->order_amount;
+        $data->cancel_reason = $request->cancel_reason;
+        $data->cancel_comment = $request->cancel_comment;
         $data->user_id = '1';
         $data->discount = $request->discount;
         $data->cd_client_id = '1';
@@ -151,12 +189,12 @@ class TdSaleOrderController extends Controller
         $data->created_by = '1';
         $data->updated_by = '1';
         $data->save();
-    
+
         // Update order details
-        TdSaleOrderItem::where('order_id', $orderId)->delete();
+        TdSaleOrderItem::where('td_sale_order_id', $orderId)->delete();
         foreach ($request->products as $product) {
             $orderDetails = new TdSaleOrderItem();
-            $orderDetails->product_id = $product['product_id'];
+            $orderDetails->md_product_id = $product['md_product_id'];
             $orderDetails->qty = $product['qty'];
             $orderDetails->price = $product['price'];
             $orderDetails->cd_client_id = '1';
@@ -165,12 +203,12 @@ class TdSaleOrderController extends Controller
             $orderDetails->is_active = '1';
             $orderDetails->created_by = '1';
             $orderDetails->updated_by = '1';
-            $orderDetails->order_id = $orderId;
+            $orderDetails->td_sale_order_id = $orderId;
             $orderDetails->save();
         }
 
         TdPaymentDetail::where('td_sale_order_id', $orderId)->delete();
-        
+
     foreach ($request->paidAmount as $item) {
         $paymentDetails = new TdPaymentDetail();
 
@@ -182,22 +220,24 @@ class TdSaleOrderController extends Controller
         $paymentDetails->is_active = '1';
         $paymentDetails->created_by = '1';
         $paymentDetails->updated_by = '1';
-        $paymentDetails->td_sale_order_id = $latestOrderId;
+        $paymentDetails->td_sale_order_id = $orderId;
         $paymentDetails->save();
     }
-    
+
         return response()->json($data);
     }
 
     public function checkout(Request $request, $orderId){
-       
+
         $data = TdSaleOrder::findOrFail($orderId);
         $data->customer = 'Admin';
-        $data->status = 'paid';
+        $data->status = $request->status;
         $data->src = 'null';
         $data->order_type = $request->order_type;
         $data->payment_type = $request->payment_type;
         $data->order_amount = $request->order_amount;
+        $data->cancel_reason = $request->cancel_reason;
+        $data->cancel_comment = $request->cancel_comment;
         $data->card_no = $request->card_no;
         $data->card_holder_name = $request->card_holder_name;
         $data->user_id = '1';
@@ -209,9 +249,25 @@ class TdSaleOrderController extends Controller
         $data->created_by = '1';
         $data->updated_by = '1';
         $data->save();
+        if ($request->has('paidAmount') && is_array($request->paidAmount)) {
+            foreach ($request->paidAmount as $item) {
+                $paymentDetails = new TdPaymentDetail();
+
+                $paymentDetails->tender_type = $item['tender_type'];
+                $paymentDetails->payment_amount = $item['payment_amount'];
+                $paymentDetails->cd_client_id = '1';
+                $paymentDetails->cd_brand_id = '1';
+                $paymentDetails->cd_branch_id = '1';
+                $paymentDetails->is_active = '1';
+                $paymentDetails->created_by = '1';
+                $paymentDetails->updated_by = '1';
+                $paymentDetails->td_sale_order_id = $orderId;
+                $paymentDetails->save();
+            }
+        }
 
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -219,13 +275,13 @@ class TdSaleOrderController extends Controller
     public function destroy($orderId)
     {
         $order = TdSaleOrder::findOrFail($orderId);
-    
+
         // Delete order details
         TdSaleOrderItem::where('order_id', $orderId)->delete();
-    
+
         // Delete the order
         $order->delete();
-    
+
         return response()->json(['message' => 'Order deleted successfully']);
     }
 }

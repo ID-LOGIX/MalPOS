@@ -26,6 +26,10 @@ class TdSaleOrder extends Model
         return $this->hasMany(TdSaleOrderItem::class, 'td_sale_order_id');
     }
 
+    public function td_payment_detail(){
+        return $this->hasMany(TdPaymentDetail::class, 'td_sale_order_id');
+    }
+
     public function TdSaleOrderCode()
     {
         $check = TdSaleOrder::where('td_sale_order_code','like','%#%' )->latest()->first()->td_sale_order_code ?? null;
@@ -36,7 +40,7 @@ class TdSaleOrder extends Model
             $max2 = $var[1] ;
             $max = $max2+1;
         }
-        $user_id = 1; 
+        $user_id = 1;
         $latestOrderId = TdSaleOrder::latest('td_sale_order_id')->pluck('td_sale_order_id')->first();
     $id = $latestOrderId + 1;
         $value = 'DOC#'.$id;

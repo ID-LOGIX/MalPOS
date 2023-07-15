@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { faSearch, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Form, Card } from "react-bootstrap";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 

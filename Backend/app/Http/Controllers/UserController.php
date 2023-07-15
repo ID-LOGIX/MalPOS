@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    
+
      /**
      * Display a listing of the resource.
      */
@@ -23,10 +23,10 @@ class UserController extends Controller
      public function index()
      {
          //
-         $data =  User::all();
+         $data =  User::with('role')->get();
          return response()->json($data);
      }
- 
+
      /**
       * Show the form for creating a new resource.
       */
@@ -34,7 +34,7 @@ class UserController extends Controller
      {
          //
      }
- 
+
      /**
       * Store a newly created resource in storage.
       */
@@ -45,7 +45,7 @@ class UserController extends Controller
          $data->name = $request->name;
          $data->email = $request->email;
          $data->password = Hash::make($request->password);
-         $data->role = $request->role;
+         $data->cd_role_id = $request->cd_role_id;
          $data->actions = $request->actions;
          $data->cd_client_id = $request->cd_client_id;
          $data->cd_brand_id = $request->cd_brand_id;
@@ -56,7 +56,7 @@ class UserController extends Controller
          $data->save();
          return response()->json($data);
      }
- 
+
      /**
       * Display the specified resource.
       */
@@ -64,16 +64,16 @@ class UserController extends Controller
      {
          //
      }
- 
+
      /**
       * Show the form for editing the specified resource.
       */
      public function edit( $id)
      {
-         $data = User::find($id);
+         $data = User::with('role')->where('id',$id)->get();
          return response()->json($data);
      }
- 
+
      /**
       * Update the specified resource in storage.
       */
@@ -83,7 +83,7 @@ class UserController extends Controller
          $data->name = $request->name;
          $data->email = $request->email;
          $data->password = Hash::make($request->password);
-         $data->role = $request->role;
+         $data->cd_role_id = $request->cd_role_id;
          $data->actions = $request->actions;
          $data->cd_client_id = $request->cd_client_id;
          $data->cd_brand_id = $request->cd_brand_id;
@@ -92,10 +92,10 @@ class UserController extends Controller
          $data->created_by = $request->created_by;
          $data->updated_by = $request->updated_by;
          $data->save();
-         
+
          return response()->json($data);
      }
- 
+
      /**
       * Remove the specified resource from storage.
       */
@@ -104,20 +104,20 @@ class UserController extends Controller
          $data = User::find($id);
          $data->delete();
          return response()->json($data);
-     } 
+     }
 
-     
+
     public function loginUser(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()], 401);
         }
-    
+
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
             $token = $user->createToken('MyApp')->plainTextToken;
@@ -126,10 +126,10 @@ class UserController extends Controller
             $auth_user->token = $token;
             $auth_user->save();
 
-    
+
             return response()->json(['token' => $token, 'user' => $user], 200);
         }
-    
+
         return response()->json(['message' => 'Email or password is incorrect'], 401);
     }
 
@@ -140,7 +140,7 @@ class UserController extends Controller
             'token' => 'required',
         ]);
         $token = $validatedData['token'];
-        $user = User::where('token', $token)->first(); 
+        $user = User::where('token', $token)->first();
         $user->pin = $validatedData['pin'];
         $user->save();
         return response()->json($user);
@@ -188,9 +188,9 @@ class UserController extends Controller
         $user = Auth::user();
 
         $user->currentAccessToken()->delete();
-        
+
         return Response(['data' => 'User Logout successfully.'],200);
     }
 
-  
+
 }

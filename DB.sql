@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2023 at 12:58 PM
+-- Generation Time: Jul 14, 2023 at 02:49 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -43,7 +43,7 @@ CREATE TABLE `cd_branches` (
 --
 
 INSERT INTO `cd_branches` (`cd_branch_id`, `name`, `cd_brand_id`, `is_active`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'KFC Johar Town', 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40');
+(1, 'KFC Johar Town', 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14');
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE `cd_brands` (
 --
 
 INSERT INTO `cd_brands` (`cd_brand_id`, `name`, `cd_client_id`, `is_active`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'KFC', 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40');
+(1, 'KFC', 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14');
 
 -- --------------------------------------------------------
 
@@ -114,8 +114,8 @@ CREATE TABLE `cd_clients` (
 --
 
 INSERT INTO `cd_clients` (`cd_client_id`, `name`, `email`, `address`, `is_active`, `country_id`, `city_id`, `phone_no`, `client_role`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'Faheem', 'fahim.bilal.ch@gmail.com', 'Lahore', 1, 'pakistan', 'Lahore', '03040891842', 'Admin', '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(2, 'umar', 'umar@gmail.com', 'Lahore', 1, 'pakistan', 'Lahore', '03040891842', 'Admin', '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40');
+(1, 'Faheem', 'fahim.bilal.ch@gmail.com', 'Lahore', 1, 'pakistan', 'Lahore', '03040891842', 'Admin', '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(2, 'umar', 'umar@gmail.com', 'Lahore', 1, 'pakistan', 'Lahore', '03040891842', 'Admin', '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14');
 
 -- --------------------------------------------------------
 
@@ -179,15 +179,34 @@ CREATE TABLE `cd_demo_requests` (
 
 CREATE TABLE `cd_roles` (
   `cd_role_id` bigint(20) UNSIGNED NOT NULL,
-  `cd_client_id` bigint(20) UNSIGNED NOT NULL,
-  `cd_brand_id` bigint(20) UNSIGNED NOT NULL,
-  `cd_branch_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `role_type` varchar(255) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `created_by` varchar(255) NOT NULL,
   `updated_by` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cd_roles`
+--
+
+INSERT INTO `cd_roles` (`cd_role_id`, `name`, `description`, `role_type`, `is_active`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'CFO', 'Chief Financial Officer', 'super_admin_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(2, 'Accounts Manager', 'Accounts Manager', 'super_admin_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(3, 'Accounts Officer', 'Accounts Officer', 'super_admin_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(4, 'Technical Support', 'Technical Support', 'super_admin_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(5, 'Functional Support', 'Functional Support', 'super_admin_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(6, 'Director', 'Director', 'super_admin_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(7, 'Sales Manager', 'Sales Manager', 'super_admin_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(8, 'Operation Manager', 'Operation Manager', 'super_admin_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(9, 'User Management', 'User Management', 'client_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(10, 'Inventory Manager', 'Inventory Manager', 'client_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(11, 'Customer Management', 'Customer Management', 'client_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(12, 'Pricing and Tax Manager', 'Pricing and Tax Manager', 'client_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(13, 'Sales Reporting', 'Sales Reporting', 'client_role', 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14');
 
 -- --------------------------------------------------------
 
@@ -304,12 +323,8 @@ CREATE TABLE `gd_cities` (
 
 CREATE TABLE `gd_countries` (
   `gd_country_id` bigint(20) UNSIGNED NOT NULL,
-  `cd_client_id` bigint(20) UNSIGNED NOT NULL,
-  `cd_brand_id` bigint(20) UNSIGNED NOT NULL,
-  `cd_branch_id` bigint(20) UNSIGNED NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `created_by` varchar(255) NOT NULL,
-  `updated_by` varchar(255) NOT NULL,
+  `gd_country_code` varchar(255) NOT NULL,
+  `country_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -412,6 +427,7 @@ CREATE TABLE `md_add_ons` (
 
 CREATE TABLE `md_banks` (
   `md_bank_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `cd_client_id` bigint(20) UNSIGNED NOT NULL,
   `cd_brand_id` bigint(20) UNSIGNED NOT NULL,
   `cd_branch_id` bigint(20) UNSIGNED NOT NULL,
@@ -430,6 +446,8 @@ CREATE TABLE `md_banks` (
 
 CREATE TABLE `md_bank_accounts` (
   `md_bank_account_id` bigint(20) UNSIGNED NOT NULL,
+  `bank_account_id` varchar(255) NOT NULL,
+  `tender_type` varchar(255) NOT NULL,
   `cd_client_id` bigint(20) UNSIGNED NOT NULL,
   `cd_brand_id` bigint(20) UNSIGNED NOT NULL,
   `cd_branch_id` bigint(20) UNSIGNED NOT NULL,
@@ -810,17 +828,17 @@ CREATE TABLE `md_products` (
 --
 
 INSERT INTO `md_products` (`md_product_id`, `product_code`, `product_name`, `product_price`, `product_image`, `md_product_category_id`, `cd_client_id`, `cd_brand_id`, `cd_branch_id`, `is_active`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'r1', 'Rice', '400', '20230529053651.jpg', 1, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(2, 'r2', 'biryani', '500', '20230529053651.jpg', 1, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(3, 'ex1', 'Expresso', '250', '20230529053718.jpg', 2, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(4, 'cc1', 'Cup Cake', '590', '20230529053746.jpg', 3, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(5, 'sw1', 'Sandwich', '650', '20230529053815.jpg', 4, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(6, 'swm1', 'Sandwich mix', '700', '20230529053840.jpg', 5, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(7, 'd1', 'Drink', '200', '20230529053905.jpg', 6, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(8, 'f1', 'Fish', '1200', '20230529053929.jpg', 7, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(9, 'pz1', 'Pizza', '1400', '20230529053959.jpg', 8, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(10, 'gb1', 'Garlic Bread', '700', '20230529054031.jpg', 9, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(11, 'bj1', 'Blue Juice', '250', '20230529054055.jpg', 10, 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:40', '2023-07-07 08:53:40');
+(1, 'r1', 'Rice', '400', '20230529053651.jpg', 1, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(2, 'r2', 'biryani', '500', '20230529053651.jpg', 1, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(3, 'ex1', 'Expresso', '250', '20230529053718.jpg', 2, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(4, 'cc1', 'Cup Cake', '590', '20230529053746.jpg', 3, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(5, 'sw1', 'Sandwich', '650', '20230529053815.jpg', 4, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(6, 'swm1', 'Sandwich mix', '700', '20230529053840.jpg', 5, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(7, 'd1', 'Drink', '200', '20230529053905.jpg', 6, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(8, 'f1', 'Fish', '1200', '20230529053929.jpg', 7, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(9, 'pz1', 'Pizza', '1400', '20230529053959.jpg', 8, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(10, 'gb1', 'Garlic Bread', '700', '20230529054031.jpg', 9, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(11, 'bj1', 'Blue Juice', '250', '20230529054055.jpg', 10, 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14');
 
 -- --------------------------------------------------------
 
@@ -849,17 +867,16 @@ CREATE TABLE `md_product_categories` (
 --
 
 INSERT INTO `md_product_categories` (`md_product_category_id`, `product_category_code`, `product_category_name`, `product_category_description`, `product_category_image`, `cd_client_id`, `cd_brand_id`, `cd_branch_id`, `is_active`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'r1', 'Rice', 'Rice', '20230529053651.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(2, 'ex1', 'Expresso', 'Expresso', '20230529053718.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(3, 'cc1', 'Cup Cake', 'Cup Cake', '20230529053746.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(4, 'sw1', 'Sandwich', 'Sandwich', '20230529053815.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(5, 'swm1', 'Sandwich mix', 'Sandwich mix', '20230529053840.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(6, 'd1', 'Drink', 'Drink', '20230529053905.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(7, 'f1', 'Fish', 'Fish', '20230529053929.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(8, 'pz1', 'Pizza', 'Pizza', '20230529053959.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(9, 'gb1', 'Garlic Bread', 'Garlic Bread', '20230529054031.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(10, 'bj1', 'Blue Juice', 'Blue Juice', '20230529054055.jpg', 1, 1, 1, 1, '1', '1', '2023-07-07 08:53:39', '2023-07-07 08:53:39'),
-(11, '67', 'Sage Black', 'Quia eveniet offici', '20230707181118.png', 1, 1, 1, 1, '1', '1', '2023-07-07 13:11:18', '2023-07-07 13:11:18');
+(1, 'r1', 'Rice', 'Rice', '20230529053651.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(2, 'ex1', 'Expresso', 'Expresso', '20230529053718.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(3, 'cc1', 'Cup Cake', 'Cup Cake', '20230529053746.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(4, 'sw1', 'Sandwich', 'Sandwich', '20230529053815.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(5, 'swm1', 'Sandwich mix', 'Sandwich mix', '20230529053840.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(6, 'd1', 'Drink', 'Drink', '20230529053905.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(7, 'f1', 'Fish', 'Fish', '20230529053929.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(8, 'pz1', 'Pizza', 'Pizza', '20230529053959.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(9, 'gb1', 'Garlic Bread', 'Garlic Bread', '20230529054031.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14'),
+(10, 'bj1', 'Blue Juice', 'Blue Juice', '20230529054055.jpg', 1, 1, 1, 1, '1', '1', '2023-07-14 06:45:14', '2023-07-14 06:45:14');
 
 -- --------------------------------------------------------
 
@@ -1110,7 +1127,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (68, '2023_06_22_051837_create_td_sale_order_items_table', 1),
 (69, '2023_06_23_104636_create_td_payment_details_table', 1),
 (70, '2023_07_07_080709_create_td_tax_categories_table', 1),
-(71, '2023_07_07_080732_create_td_tax_rates_table', 1);
+(71, '2023_07_07_080732_create_td_tax_rates_table', 1),
+(72, '2023_07_14_061459_create_td_currencies_table', 1);
 
 -- --------------------------------------------------------
 
@@ -1155,16 +1173,25 @@ CREATE TABLE `personal_access_tokens` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `personal_access_tokens`
+-- Table structure for table `td_currencies`
 --
 
-INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\Models\\User', 3, 'MyApp', '8cf3843ca773c5a2c2a6326722131c6d0738f607b242190bec488c364d3cf863', '[\"*\"]', NULL, NULL, '2023-07-07 12:06:33', '2023-07-07 12:06:33'),
-(2, 'App\\Models\\User', 3, 'MyApp', 'ce84c6142cbff07d762c2f8cda034a0469f47c58a69fde48a59abd622a650db6', '[\"*\"]', NULL, NULL, '2023-07-07 15:55:50', '2023-07-07 15:55:50'),
-(3, 'App\\Models\\User', 3, 'MyApp', 'e9ca734691efa5e7f60e387afcadef6f5db709b5554b0cfa4bce40f62f722ddd', '[\"*\"]', NULL, NULL, '2023-07-08 02:51:23', '2023-07-08 02:51:23'),
-(4, 'App\\Models\\User', 3, 'MyApp', 'cd0626c8c945c2f43b2d48cc0ace7e08308daaa29c843d3be785400591357973', '[\"*\"]', NULL, NULL, '2023-07-08 05:56:41', '2023-07-08 05:56:41'),
-(5, 'App\\Models\\User', 3, 'MyApp', '66a1097820e0e4d262d833e08a00bf7dad3698e29562d865fa0b8c42c67ab8ea', '[\"*\"]', NULL, NULL, '2023-07-08 05:56:56', '2023-07-08 05:56:56');
+CREATE TABLE `td_currencies` (
+  `td_currency_id` bigint(20) UNSIGNED NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `currency_type` varchar(255) NOT NULL,
+  `cd_client_id` bigint(20) UNSIGNED NOT NULL,
+  `cd_brand_id` bigint(20) UNSIGNED NOT NULL,
+  `cd_branch_id` bigint(20) UNSIGNED NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `created_by` varchar(255) NOT NULL,
+  `updated_by` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1266,14 +1293,6 @@ CREATE TABLE `td_payment_details` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `td_payment_details`
---
-
-INSERT INTO `td_payment_details` (`td_payment_detail_id`, `tender_type`, `payment_amount`, `cd_client_id`, `cd_brand_id`, `cd_branch_id`, `td_sale_order_id`, `account_name`, `routing_number`, `check_number`, `account_number`, `date_promised`, `credit_card`, `credit_card_number`, `is_active`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'cash', '25', 1, 1, 1, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '1', '1', '2023-07-08 01:53:38', '2023-07-08 01:53:38'),
-(2, 'card', '50', 1, 1, 1, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '1', '1', '2023-07-08 01:53:38', '2023-07-08 01:53:38');
-
 -- --------------------------------------------------------
 
 --
@@ -1345,9 +1364,11 @@ CREATE TABLE `td_sale_orders` (
   `time` datetime DEFAULT NULL,
   `discount` varchar(255) DEFAULT NULL,
   `card_no` varchar(255) DEFAULT NULL,
+  `cancel_reason` varchar(255) DEFAULT NULL,
+  `cancel_comment` varchar(255) DEFAULT NULL,
   `card_holder_name` varchar(255) DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `order_amount` varchar(255) NOT NULL,
+  `order_amount` varchar(255) DEFAULT NULL,
   `cd_client_id` bigint(20) UNSIGNED NOT NULL,
   `cd_brand_id` bigint(20) UNSIGNED NOT NULL,
   `cd_branch_id` bigint(20) UNSIGNED NOT NULL,
@@ -1358,16 +1379,6 @@ CREATE TABLE `td_sale_orders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `td_sale_orders`
---
-
-INSERT INTO `td_sale_orders` (`td_sale_order_id`, `td_sale_order_code`, `customer`, `status`, `src`, `order_type`, `payment_type`, `time`, `discount`, `card_no`, `card_holder_name`, `user_id`, `order_amount`, `cd_client_id`, `cd_brand_id`, `cd_branch_id`, `is_active`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'DOC#1', 'Admin', 'UnPaid', 'null', 'Delivery', 'card & cash', '2023-07-07 16:47:59', '660', NULL, NULL, 1, '10120', 1, 1, 1, 1, '1', '1', '2023-07-07 11:47:59', '2023-07-07 11:47:59'),
-(2, 'DOC#2', 'Admin', 'paid', 'null', 'Delivery', 'cash', '2023-07-07 16:49:53', NULL, NULL, NULL, 1, '11000', 1, 1, 1, 1, '1', '1', '2023-07-07 11:49:53', '2023-07-08 02:02:13'),
-(3, 'DOC#3', 'Admin', 'Paid', 'null', 'Takeaway', 'card & cash', '2023-07-08 06:53:38', '450', NULL, NULL, 1, '525', 1, 1, 1, 1, '1', '1', '2023-07-08 01:53:38', '2023-07-08 01:53:38'),
-(4, 'DOC#4', 'Admin', 'paid', 'null', 'Takeaway', 'cash', '2023-07-08 06:54:15', NULL, NULL, NULL, 1, '33770', 1, 1, 1, 1, '1', '1', '2023-07-08 01:54:15', '2023-07-08 01:58:06');
-
 -- --------------------------------------------------------
 
 --
@@ -1376,8 +1387,8 @@ INSERT INTO `td_sale_orders` (`td_sale_order_id`, `td_sale_order_code`, `custome
 
 CREATE TABLE `td_sale_order_items` (
   `td_sale_order_item_id` bigint(20) UNSIGNED NOT NULL,
-  `order_id` bigint(20) UNSIGNED NOT NULL,
-  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `td_sale_order_id` bigint(20) UNSIGNED NOT NULL,
+  `md_product_id` bigint(20) UNSIGNED NOT NULL,
   `qty` varchar(255) DEFAULT NULL,
   `price` varchar(255) DEFAULT NULL,
   `cd_client_id` bigint(20) UNSIGNED NOT NULL,
@@ -1389,18 +1400,6 @@ CREATE TABLE `td_sale_order_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `td_sale_order_items`
---
-
-INSERT INTO `td_sale_order_items` (`td_sale_order_item_id`, `order_id`, `product_id`, `qty`, `price`, `cd_client_id`, `cd_brand_id`, `cd_branch_id`, `is_active`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 8, '3', NULL, 1, 1, 1, 1, '1', '1', '2023-07-07 11:47:59', '2023-07-07 11:47:59'),
-(2, 1, 9, '4', NULL, 1, 1, 1, 1, '1', '1', '2023-07-07 11:47:59', '2023-07-07 11:47:59'),
-(3, 2, 3, '4', NULL, 1, 1, 1, 1, '1', '1', '2023-07-07 11:49:53', '2023-07-07 11:49:53'),
-(4, 3, 3, '2', NULL, 1, 1, 1, 1, '1', '1', '2023-07-08 01:53:38', '2023-07-08 01:53:38'),
-(5, 4, 5, '2', NULL, 1, 1, 1, 1, '1', '1', '2023-07-08 01:54:15', '2023-07-08 01:54:15'),
-(6, 4, 4, '3', NULL, 1, 1, 1, 1, '1', '1', '2023-07-08 01:54:15', '2023-07-08 01:54:15');
 
 -- --------------------------------------------------------
 
@@ -1454,15 +1453,6 @@ CREATE TABLE `td_tax_categories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `td_tax_categories`
---
-
-INSERT INTO `td_tax_categories` (`td_tax_category_id`, `cd_brand_id`, `cd_branch_id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(2, 1, 1, 'Vat Type Taxes', 'All VAT TAXES within countries', '2023-07-08 03:00:09', '2023-07-08 03:00:09'),
-(3, 1, 1, 'Sales Tax', 'All Sales Tax Dubai', '2023-07-08 03:59:31', '2023-07-08 04:03:07'),
-(4, 1, 1, 'PO Tax', 'PO tax', '2023-07-08 04:03:43', '2023-07-08 04:03:43');
-
 -- --------------------------------------------------------
 
 --
@@ -1474,19 +1464,14 @@ CREATE TABLE `td_tax_rates` (
   `cd_brand_id` bigint(20) UNSIGNED NOT NULL,
   `cd_branch_id` bigint(20) UNSIGNED NOT NULL,
   `td_tax_category_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `valid_form` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   `rate` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `td_tax_rates`
---
-
-INSERT INTO `td_tax_rates` (`td_tax_rate_id`, `cd_brand_id`, `cd_branch_id`, `td_tax_category_id`, `valid_form`, `type`, `rate`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, 'May', 'PO', '16', '2023-07-08 04:39:52', '2023-07-08 04:39:52');
 
 -- --------------------------------------------------------
 
@@ -1518,7 +1503,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(255) NOT NULL,
+  `cd_role_id` bigint(20) UNSIGNED NOT NULL,
   `actions` varchar(255) NOT NULL,
   `cd_client_id` bigint(20) UNSIGNED NOT NULL,
   `cd_brand_id` bigint(20) UNSIGNED NOT NULL,
@@ -1537,10 +1522,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `actions`, `cd_client_id`, `cd_brand_id`, `cd_branch_id`, `is_active`, `created_by`, `updated_by`, `token`, `pin`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$JRGpkw.HHl.5RoHYfomS.O4Hg/GuIhZmzDzf3OyulpmhdpJvf2KB2', 'Admin', '1', 1, 1, 1, 1, '1', '1', NULL, NULL, NULL, '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(2, 'Faheem', 'faheem@gmail.com', NULL, '$2y$10$M2RuThrvO1bntUVDecTuSuHVWER/RpcSNawoIj7OSrF5ekpoZ0XxO', 'Admin', '1', 1, 1, 1, 1, '1', '1', NULL, NULL, NULL, '2023-07-07 08:53:40', '2023-07-07 08:53:40'),
-(3, 'test', 'test@gmail.com', NULL, '$2y$10$cn7Yg.sQsTvFTqOIMg014ejcsSeg4BJMOjhDeZn3WA5OGLgxultgy', 'admin', '2', 1, 1, 1, 1, 'malpos', 'malpos', '5|zJ7N5h1pHQWZqFdgS1wdwyeI8HSrZmYk7APTOvot', NULL, NULL, '2023-07-07 12:06:22', '2023-07-08 05:56:56');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `cd_role_id`, `actions`, `cd_client_id`, `cd_brand_id`, `cd_branch_id`, `is_active`, `created_by`, `updated_by`, `token`, `pin`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$emLxxUlL5sFl1cwg1Y9LRuWUG0j83ZcVV770eIl.DNAIUgaKBQXgu', 1, '1', 1, 1, 1, 1, '1', '1', NULL, NULL, NULL, '2023-07-14 06:45:15', '2023-07-14 06:45:15'),
+(2, 'Faheem', 'faheem@gmail.com', NULL, '$2y$10$xGImvCXxRsFCjNp5yQ6CT.ZyjtMA6eAvWTCYn1jntvJWpq2PGL81.', 1, '1', 1, 1, 1, 1, '1', '1', NULL, NULL, NULL, '2023-07-14 06:45:15', '2023-07-14 06:45:15');
 
 --
 -- Indexes for dumped tables
@@ -1886,6 +1870,12 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `td_currencies`
+--
+ALTER TABLE `td_currencies`
+  ADD PRIMARY KEY (`td_currency_id`);
+
+--
 -- Indexes for table `td_currency_conversio_rates`
 --
 ALTER TABLE `td_currency_conversio_rates`
@@ -2033,7 +2023,7 @@ ALTER TABLE `cd_demo_requests`
 -- AUTO_INCREMENT for table `cd_roles`
 --
 ALTER TABLE `cd_roles`
-  MODIFY `cd_role_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `cd_role_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `cd_role_hiararchies`
@@ -2243,7 +2233,7 @@ ALTER TABLE `md_products`
 -- AUTO_INCREMENT for table `md_product_categories`
 --
 ALTER TABLE `md_product_categories`
-  MODIFY `md_product_category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `md_product_category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `md_product_groups`
@@ -2303,13 +2293,19 @@ ALTER TABLE `md_ware_houses`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `td_currencies`
+--
+ALTER TABLE `td_currencies`
+  MODIFY `td_currency_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `td_currency_conversio_rates`
@@ -2339,7 +2335,7 @@ ALTER TABLE `td_leads`
 -- AUTO_INCREMENT for table `td_payment_details`
 --
 ALTER TABLE `td_payment_details`
-  MODIFY `td_payment_detail_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `td_payment_detail_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `td_payment_transactions`
@@ -2363,13 +2359,13 @@ ALTER TABLE `td_reservations`
 -- AUTO_INCREMENT for table `td_sale_orders`
 --
 ALTER TABLE `td_sale_orders`
-  MODIFY `td_sale_order_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `td_sale_order_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `td_sale_order_items`
 --
 ALTER TABLE `td_sale_order_items`
-  MODIFY `td_sale_order_item_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `td_sale_order_item_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `td_store_adjustments`
@@ -2387,13 +2383,13 @@ ALTER TABLE `td_store_transfers`
 -- AUTO_INCREMENT for table `td_tax_categories`
 --
 ALTER TABLE `td_tax_categories`
-  MODIFY `td_tax_category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `td_tax_category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `td_tax_rates`
 --
 ALTER TABLE `td_tax_rates`
-  MODIFY `td_tax_rate_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `td_tax_rate_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `td_web_chats`
@@ -2405,7 +2401,7 @@ ALTER TABLE `td_web_chats`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

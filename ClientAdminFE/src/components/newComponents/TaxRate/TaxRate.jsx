@@ -31,6 +31,7 @@ const TaxRate = () => {
     try {
       const response = await api.get("/tax_rate");
       setTaxRates(response.data.tax_rate);
+      console.log(response);
     } catch (error) {
       console.log(error, "Error Retriving data");
     }
@@ -105,9 +106,10 @@ const TaxRate = () => {
                         <Thead className="mc-table-head">
                           <Tr>
                             <Th>Id</Th>
+                            <Th>Name</Th>
                             <Th>Tax Type</Th>
                             <Th>Tax Rate</Th>
-                            {/* <Th>Description</Th> */}
+                            <Th>Description</Th>
                             <Th>Actions</Th>
                           </Tr>
                         </Thead>
@@ -117,16 +119,10 @@ const TaxRate = () => {
                             currentTaxRates.map((rate) => (
                               <Tr className="tbody" key={rate.td_tax_rate_id}>
                                 <Td>{rate.td_tax_rate_id}</Td>
+                                <Td>{rate.name}</Td>
                                 <Td>{rate.type}</Td>
-                                <Td
-                                // style={{
-                                //   color: rate.is_active ? "green" : "red",
-                                // }}
-                                >
-                                  {/* {rate.is_active ? "Yes" : "No"} */}
-                                  {rate.rate} %
-                                </Td>
-                                {/* <Td>{rate.description}</Td> */}
+                                <Td>{rate.rate} %</Td>
+                                <Td>{rate.description}</Td>
                                 <Td>
                                   <Box className="d-flex flex-row">
                                     <Box>

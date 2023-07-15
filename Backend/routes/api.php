@@ -12,6 +12,12 @@ use App\Http\Controllers\MdProductController;
 use App\Http\Controllers\TdSaleOrderController;
 use App\Http\Controllers\TdTaxCategoryController;
 use App\Http\Controllers\TdTaxRateController;
+use App\Http\Controllers\CdRoleController;
+use App\Http\Controllers\MdBankController;
+use App\Http\Controllers\MdBankAccountController;
+use App\Http\Controllers\TdCurrencyController;
+
+
 
 
 
@@ -62,7 +68,9 @@ Route::get('edit_order/{id}', [TdSaleOrderController::class, 'edit'])->name('edi
 Route::post('checkout_order/{id}', [TdSaleOrderController::class, 'checkout'])->name('checkout_order');
 Route::post('update_order/{$id}', [TdSaleOrderController::class, 'update'])->name('update_order');
 Route::delete('delete_order/{$id}', [TdSaleOrderController::class, 'destroy'])->name('delete_order');
-Route::get('order_receipts', [TdSaleOrderController::class, 'receipt'])->name('order_receipts');
+Route::get('order_receipts/{filter?}', [TdSaleOrderController::class, 'receipt'])->name('order_receipts');
+Route::get('check_order_receipt/{id}', [TdSaleOrderController::class, 'check_order_receipt'])->name('check_order_receipt');
+
 
 
 Route::get('getuser', [UserController::class, 'index'])->name('user');
@@ -71,6 +79,32 @@ Route::post('user_update/{id}', [UserController::class, 'update'])->name('user_u
 Route::get('user_edit/{id}', [UserController::class, 'edit'])->name('user_edit');
 Route::delete('user_delete/{id}', [UserController::class, 'destroy'])->name('user_delete');
 Route::post('user_login', [UserController::class, 'loginUser'])->name('user_login');
+
+Route::post('role_store', [CdRoleController::class, 'store'])->name('role_store');
+Route::get('admin_roles', [CdRoleController::class, 'index'])->name('admin_roles');
+Route::get('role_edit/{id}', [CdRoleController::class, 'edit'])->name('role_edit');
+Route::post('role_update/{id}', [CdRoleController::class, 'update'])->name('role_update');
+Route::delete('role_delete/{id}', [CdRoleController::class, 'destroy'])->name('role_delete');
+
+Route::get('banks', [MdBankController::class, 'index'])->name('banks');
+Route::post('bank_store', [MdBankController::class, 'store'])->name('bank_store');
+Route::post('bank_update/{id}', [MdBankController::class, 'update'])->name('bank_update');
+Route::get('bank_edit/{id}', [MdBankController::class, 'edit'])->name('bank_edit');
+Route::delete('bank_delete/{id}', [MdBankController::class, 'destroy'])->name('bank_delete');
+
+Route::get('bank_account', [MdBankAccountController::class, 'index'])->name('bank_account');
+Route::post('bank_account_store', [MdBankAccountController::class, 'store'])->name('bank_account_store');
+Route::post('bank_account_update/{id}', [MdBankAccountController::class, 'update'])->name('bank_account_update');
+Route::get('bank_account_edit/{id}', [MdBankAccountController::class, 'edit'])->name('bank_account_edit');
+Route::delete('bank_account_delete/{id}', [MdBankAccountController::class, 'destroy'])->name('bank_account_delete');
+
+Route::get('currency', [TdCurrencyController::class, 'index'])->name('currency');
+Route::post('currency_store', [TdCurrencyController::class, 'store'])->name('currency_store');
+Route::post('currency_update/{id}', [TdCurrencyController::class, 'update'])->name('currency_update');
+Route::get('currency_edit/{id}', [TdCurrencyController::class, 'edit'])->name('currency_edit');
+Route::delete('currency_delete/{id}', [TdCurrencyController::class, 'destroy'])->name('currency_delete');
+
+
 
 Route::post('store_pin', [UserController::class, 'storePin'])->name('store_pin');
 Route::post('check_pin', [UserController::class, 'checkPin'])->name('check_pin');
