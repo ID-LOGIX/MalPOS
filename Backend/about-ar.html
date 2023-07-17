@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000"
+        rel="stylesheet">
+        <link rel="stylesheet" href="./fontawesome-free-6.1.2-web/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/v4-shims.min.js" integrity="sha512-jwXCc38I7s9ikGI6qbqIcktgJDVVppplsNQ5DgW7VbUZCVvdo31qQnpgiU7aDQRa3pETbn9LPnOo97r4Id5/cg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    
+</head>
+<style type="text/css">
+  .header {
+    background-image: url('./img/banner-bg.jpg');
+    background-repeat: no-repeat;
+  } 
+  .top-header{
+    border-bottom: 1px solid #000;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    border-top: 7px solid #F07632;
+  }
+  span#top-header-left {
+    display: -webkit-inline-box;
+}
+  span#top-header-left strong {
+    margin-left: 12px;
+    margin-right: 52px;
+}
+span#top-header-left p {
+    margin: 0 1%;
+}
+span#top-header-left a {
+    text-decoration: none;
+    color: #000;
+}
+span#top-header-right {
+    display: -webkit-inline-box;
+}
+ span#top-header-right strong {
+    margin-left: 12px;
+    margin-right: 20px;
+}
+span#top-header-right p {
+    margin: 0 4%;
+}
+span#top-header-right select {
+    border: none;
+    background-color: transparent;
+}
+nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+    background-color: transparent !important;
+}
+a.navbar-brand {
+    width: 30%;
+}
+a.navbar-brand img {
+    width: 45%;
+    margin-left: 20%;
+}
+.navbar button {
+    background-color: #434343;
+    color: #fff;
+    border: none;
+    padding: 8px 1.5%;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 7%;
+    margin-left: 4%;
+}
+a.nav-link {
+    font-size: 19px;
+}
+a.nav-link.active {
+    font-weight: 500;
+}
+span.navbar-toggler-icon {
+  background-color: #fff;
+}
+.home-banner h1 {
+  font-size: 48px;
+  font-weight: 600;
+}
+.home-banner p {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+} 
+.home-banner p span{
+  color: #F07632;
+  font-style: italic;
+  font-weight: 600;
+}    
+.home-banner-right img {
+  width: 85%;
+}
+.home-banner {
+    margin-top: 30px;
+    text-align: right;
+}
+.home-banner-right {
+  margin-top: 30px;
+}
+.home-banner button {
+    background-color: #434343;
+    color: #fff;
+    border: none;
+    padding: 8px 4.5%;
+    font-size: 21px;
+    font-weight: 500;
+}
+.frnt-banner {
+    padding-bottom: 3%;
+    text-align: center;
+}
+button.accordion-button.collapsed {
+    font-size: 19px;
+    font-weight: 600;
+}
+.accordion-flush .accordion-item .accordion-button {
+    border-bottom: 1px solid;
+}
+.faq-second-section button {
+  background-color: #434343;
+    color: #fff;
+    border: none;
+    padding: 8px 4.5%;
+    font-size: 21px;
+    font-weight: 500;
+}
+.faq-second-section {
+    text-align: center;
+    margin-top: 5%;
+}
+.faq-second-section h1 {
+    font-size: 41px;
+    font-weight: 600;
+}
+.faq-second-section p {
+    font-size: 19px;
+}
+div#accordionFlushExample {
+    border-top: 1px solid #000;
+}
+@media only screen and (max-width: 768px) {
+  .navbar button {
+    margin-left: 0;
+  }
+  span#top-header-left strong {
+    font-size: 10px !important;
+    margin-right: 3px !important;
+  }
+  span#top-header-left p {
+    font-size: 7px !important;
+    margin-top: 4%
+  }
+  span#top-header-right p {
+    margin: 0 4% !important;
+    font-size: 13px !important;
+}
+span#top-header-right select {
+    font-size: 10px !important;
+}
+span#top-header-right img {
+    width: 10px !important;
+  }
+ span#top-header-left img {
+    width: 8px !important;
+  } 
+  a.navbar-brand img {
+    width: 100% !important;
+    margin-left: 0 !important;
+}
+ div#navbarNavDropdown {
+    position: absolute;
+    top: 47px;
+    background-color: aliceblue;
+    width: 80%;
+    padding-left: 5%;
+    padding-bottom: 5%;
+}
+#footer .third .footer_peng img {
+  position: relative !important;
+  top: 0 !important;
+}
+}
+</style>
+<body>
+
+<div class="header">
+
+  <div class="top-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <span id="top-header-left"><img src="./img/phon-icon.png"><strong>+9660045333</strong><p><a href="#">sales@malops.co</a></p> <p>|</p> <p>المطورين</p> <p>|</p><p>يدعم</p></span>
+      </div>
+
+      <div class="col-md-4 col-12"></div>
+
+      <div class="col-md-4 col-12">
+        <span id="top-header-right"><img src="./img/flag-img.png">
+                  <select name="cars" id="cars">
+            <option value="#">لغة</option>
+            <option value="#">English</option>
+            <option value="#">عربي</option> </select><p>|</p><p>Merchant Login</p></span>
+        
+      </div>
+            
+        </div>
+     </div>
+    </div>
+
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+     <a class="navbar-brand" href="#"><img src="./img/logo-malpos.png"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="./index.html"> بيت  </a>   </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./about.html">معلومات عنا</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=".support.html"> يدعم </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./faq.html"> أسئلة وأجوبة </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">التسعير</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">مدونة</a>
+        </li>
+      </ul>
+      <button>البدء</button>
+    </div>
+  </div>
+ </nav>
+
+
+  <div class="frnt-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm--12">
+                <div class="home-banner">
+                    <h1>سريع وبسيط<span style="color: #F07632;">POS</span>برمجة<br> للمطاعم!</h1>
+                        <p><span style="color: #F07632;">maplos</span> POS يدير جميع أعمالك<br> بشكل فعال حتى تتمكن من التركيز على تنمية <br> وضع علامة مثل أ <span style="color: #F07632;">رئيس حقيقي</span></p>
+                        <button>جرب نسخة تجريبية مجانية</button>
+       </div>
+        </div>
+        <div class="col-md-2 col-sm-12"></div>
+        <div class="col-md-4 col-sm-12">
+      <div class="home-banner-right">
+       <img src="./img/banner-image.png">
+     </div>
+   </div>
+    </div>
+    </div>
+   </div>
+
+
+</div>
+
+    <section id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="about_us">
+                        <div class="title">
+                            <h2>
+                                <span>malpos</span> عن
+                            </h2>
+                        </div>
+                        <div class="sub_title">
+                            <p>
+
+                                نحن مزود رائد لحلول برمجيات نقاط البيع للمطاعم في المملكة العربية السعودية. نحن نخطط
+                                لتقديم هذا البرنامج في دول الخليج الأخرى أيضًا. هدفنا هو مساعدة أصحاب المطاعم في تبسيط
+                                عملياتهم وتحسين أرباحهم وتعزيز تجربة خدمة العملاء لديهم.
+                                تم إنشاء برنامجنا لنقدم لك الميزة التنافسية التي تحتاجها للنجاح لأننا ندرك مدى المنافسة
+                                الشرسة في المطاعم إدارة المخزون وتتبعه ، وتسريع الطلب والدفع ، وجمع معلومات العميل
+                                الحيوية ، وغير ذلك الكثير بمساعدة برنامج POS الخاص بنا. لضمان استعداد عملائنا تمامًا
+                                لتحقيق أقصى استفادة من المنتج ، نقدم دعمًا وتدريبًا رائعًا للعملاء.أعمال المطاعم. نظام
+                                نقاط البيع لدينا سهل الاستخدام ومصمم خصيصًا لتلبية متطلبات أعمال المطاعم. يمكن لمشغلي
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- who starts -->
+    <section id="who">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="we">
+                        <div class="title">
+                            <h2>
+                                من نحن
+                            </h2>
+                        </div>
+                        <div class="sub_title">
+                            <p>
+
+                                نحن فريق من الخبراء المتخصصين في مجال تطوير البرمجيات وصناعة المطاعم. هدفنا هو إنشاء
+                                حلول برمجية مبتكرة تساعد عملائنا على إدارة أعمالهم بشكل أكثر كفاءة وربحية. نحن نتفهم
+                                التحديات الفريدة التي تواجهها المطاعم ، ونسعى جاهدين لإنشاء حلول برمجية تعالج هذه
+                                المشكلات المعقدة وتحلها. يلتزم فريقنا بتقديم منتجات وخدمات عالية الجودة لعملائنا.
+                                نحن نفخر بقدرتنا على الاستماع إلى احتياجات عملائنا وتقديم حلول مخصصة تلبي متطلباتهم.
+                                يدفعنا شغفنا بصناعة المطاعم والتزامنا بالتميز إلى تحسين حلولنا باستمرار لتتجاوز توقعات
+                                عملائنا.
+                                قبل كل شيء ، نحن ملتزمون بضمان نجاح عملائنا من خلال توفير حلول برمجية موثوقة تساعد
+                                أعمالهم على الازدهار
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- who ends -->
+    <!-- mission starts -->
+    <section id="mission">
+        <div class="container">
+            <div class="our_mission">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="title">
+                            <h2>
+                                مهمتنا
+                            </h2>
+                        </div>
+                        <div class="sub-title">
+                            <p>
+                                مهمتنا في <span>Malpos</span> هي تزويد المطاعم في المملكة العربية السعودية ودول الخليج
+                                الأخرى بأحدث
+                                برامج نقاط البيع وأكثرها سهولة في الاستخدام ، مما يعزز إنتاجيتها وربحيتها ومتعة العميل.
+                                من خلال تبسيط عملياتهم وتمكينهم من التركيز على الأمور الأكثر أهمية - توفير تجارب طعام
+                                ممتازة لعملائهم - نأمل في إحداث ثورة في الطريقة التي يدير بها أصحاب المطاعم شركاتهم.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- mission ends -->
+    <!-- team satrts -->
+    <section id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 ">
+                    <div class="tile">
+                        <h2>
+                            التق بفريقنا
+                        </h2>
+                    </div>
+                    <div class="sub_title">
+                        <p>
+                            بعض المطاعم الشهيرة سريعة النمو التي وثقت
+                            Malpos مع أعمالهم.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- team ends -->
+    <!-- team pics- starts -->
+    <section id="team_pic">
+        <div class="container">
+            <div class="row">
+                <div class="pic_team">
+                    <div class="col-sm-12 col-md-3">
+                        <div class="first">
+                            <div class="name">
+                                <h4>Mr. Taken Mario</h4>
+                                <p>Managing Director</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="second">
+                            <div class="name">
+                                <h4>Mr. Taken Mario</h4>
+                                <p>Managing Director</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="third">
+                            <div class="name">
+                                <h4>Mr. Taken Mario</h4>
+                                <p>Managing Director</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="forth">
+                            <div class="name">
+                                <h4>Mr. Taken Mario</h4>
+                                <p>Managing Director</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- team pic ends -->
+    <!-- testimonial starts -->
+    <section id="testimonial">
+        <div class="container">
+            <div class="row">
+                <div class="our_testimonial">
+                    <div class="col-sm-12 col-md-7">
+                        <div class="left">
+                            <div class="title">
+                                <h2>شهادة</h2>
+                            </div>
+                            <div class="sub_title">
+                                <p>
+                                    "بصفتي مالك فندق ، أنا راضٍ تمامًا عن نظام Malpos POS الذي قمت بتطبيقه مؤخرًا. لقد
+                                    أثبت أنه حل فعال لعملياتنا الفندقية. لقد أدت واجهة المستخدم سهلة الاستخدام للنظام
+                                    والميزات الشاملة إلى تبسيط عملياتنا إلى حد كبير. أوصي بشدة لأصحاب الفنادق الزملاء
+                                    الباحثين عن نظام Malpos موثوق لنقاط البيع ".
+                                </p>
+                            </div>
+                            <div class="row">
+                                <div class="testimonial_name">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="name">
+                                            <h4>Muhammad Khalid - Founder</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="rating">
+                                            <img src="./img/Group 141.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-5">
+                        <div class="right">
+                            <div class="client_pic">
+                                <img src="./img/dl.beatsnoop.com-hq-324916841-FV94iBrPaK.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- testimonial end -->
+    <section id="client">
+        <div class="container">
+            <div class="row">
+                <div class="title">
+                    <h2>
+                        عملائنا
+                    </h2>
+                </div>
+                <div class="sub_title">
+                    <p>
+                        بعض المطاعم الشهيرة سريعة
+                        النمو التي وثقت
+                        فودكس مع أعمالهم
+                    </p>
+                </div>
+                <div class="logos">
+                    <div class="col-sm-12 col-lg-3">
+                        <div class="first">
+                            <img src="./img/Repeat Grid 1.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-2">
+                        <div class="second">
+                            <img src="./img/1007341-1450603817.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-2">
+                        <div class="third">
+                            <img src="./img/466959_11404586_2165065_4b0a7240_image.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-2">
+                        <div class="forth">
+                            <img src="./img/Arabic-Resturant-Shesha-Cafe-Logo-design.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-2">
+                        <div class="fifth">
+                            <img src="./img/villa-madina-logo-vector.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- client ends -->
+     <!-- system starts -->
+     <section id="system">
+        <div class="container">
+            <div class="try_system">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="first">
+                            <div class="laptop">
+                                <img src="./img/pngegg(4).png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="second">
+                            <div class="title">
+                                <h2>
+                                    هل أنت جاهز؟
+                                </h2>
+                            </div>
+                            <div class="sub_title">
+                                <p>
+                                    جرب النظام لمدة 15 يومًا مجانًا
+                                </p>
+                            </div>
+                            <div class="btn">
+                                <button>
+                                    البدء
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="third">
+                            <div class="boy">
+                                <img src="./img/boy.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- system end -->
+
+<section id="footer" class="fontawesome-i2svg-active fontawesome-i2svg-complete">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                    <div class="first">
+                        <div class="title">
+                            <h3>أنواع المنافذ</h3>
+                        </div>
+                        <div class="type_list">
+                            <ul class="items">
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">غرامة العشاء</a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">QSR</a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">كافيه</a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">صالات طعام ومقاصف</a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">مطابخ كلاود</a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">محلات الآيس كريم والحلويات</a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">مخبز</a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">بار ومخبز</a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">بيتزا أو بيتزا شوب </a></p></li>
+                                <li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">سلاسل كبيرة</a></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="second">
+                        <div class="title">
+                            <h3>نقاط البيع</h3>
+                        </div>
+                        <div class="type_list">
+                            <ul class="items">
+                                <li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">الفواتير</a></p></li>
+                                <li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">جرد</a></p></li>
+                                <li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">الإبلاغ </a></p></li>
+                                <li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">قائمة طعام</a></p></li>
+                                <li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">CRM</a></p></li>
+                                <li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">الطلب على الانترنيت</a></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="third">
+                        <div class="title">
+                            <h3>الإضافات</h3>
+                            <div class="type_list">
+                                <ul class="items">
+                                    <li><li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">سوق التطبيقات</a></p></li>
+                                    <li><li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">تكاملات</a></p></li>
+                                    <li><li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">مركز الموردين</a></p></li>
+                                    <li><li><li><p><span class="square"><i class="fa fa-angle-left"></i></span> <a href="#">مجتمع</a></p></li>
+                                </ul>
+                            </div>
+                            <div class="footer_peng">
+                                <img src="./img/pngegg(9).png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="forth">
+                        <div class="title">
+                            <h3>
+                                ابقى على تواصل
+                            </h3>
+                        </div>
+                        <div class="sub_title">
+                            <p>
+                                مانلوبس للخدمات الغذائية
+                            </p>
+                        </div>
+                        <div class="list_item">
+                            <ul style="list-style: none;">
+                                <li><span class="footer-contact"><i class="fa-solid fa-envelope"></i></span>الصحافة ، شارع العليا 6531 ، 3059 الرياض 13321 ، المملكة العربية السعودية </li>
+                                <li><span class="footer-contact"><i class="fa-solid fa-phone"></i></span>+9660045333</li>
+                                <li><span class="footer-contact"><i class="fa-sharp fa-solid fa-location-dot"></i></span>sales@malops.co</li>
+                            </ul>
+                        </div>
+                        <div class="footer_logo">
+                            <img src="./img/9.png" alt="">
+                        </div>
+                        <div class="item">
+                            <p>
+                                مؤسسة أعمال مرن لتقنية المعلومات
+                            </p>
+                        </div>
+                        <div class="social_icon">
+                            <img src="./img/Group 60.png" alt="">
+                        </div>
+                        <div class="google_play">
+                            <img src="./img/32-327974_available-on-the-app-store.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- footer ends -->
+    <section id="last">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="first">
+                        <div class="title">
+                            <p>
+                                © 2023 جميع الحقوق محفوظة malops
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="right_item">
+                        <div class="term">
+                            <p>
+                                الأحكام والشروط
+                            </p>
+                        </div>
+                        <div class="policy">
+                            <p>
+                                سياسة الخصوصية
+                            </p>
+                        </div>
+                        <div class="refund">
+                            <p>
+                                سياسة الإلغاء والاسترداد
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    
+
+    <script src="./js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

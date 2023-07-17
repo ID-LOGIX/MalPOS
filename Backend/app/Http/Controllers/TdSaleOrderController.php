@@ -62,7 +62,7 @@ class TdSaleOrderController extends Controller
 
          }
          else{
-            $data =  TdSaleOrder::all();
+            $data =  TdSaleOrder::with('td_payment_detail')->get();
             return response()->json($data);
 
          }

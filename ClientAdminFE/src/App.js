@@ -147,6 +147,8 @@ import Banks from "./newPages/Banks/Banks";
 import CreateBank from "./newPages/Banks/CreateBank";
 import BankAccounts from "./newPages/BankAccounts/BankAccounts";
 import CreateBankAccount from "./newPages/BankAccounts/CreateBankAccount";
+import ClientRoles from "./components/newComponents/ClientRoles/ClientRoles";
+import CreateClientRoles from "./components/newComponents/ClientRoles/CreateClientRoles";
 
 export default function App() {
   return (
@@ -243,6 +245,22 @@ export default function App() {
                 element={
                   <RequireAuth>
                     <CreateBankAccount />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/client-roles"
+                element={
+                  <RequireAuth>
+                    <ClientRoles />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/create-client-role"
+                element={
+                  <RequireAuth>
+                    <CreateClientRoles />
                   </RequireAuth>
                 }
               />

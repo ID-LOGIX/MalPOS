@@ -61,6 +61,11 @@
           ]
         },
         {
+          "icon": "group",
+          "text": "Roles",
+          "href": "/client-roles"
+        },
+        {
           "icon": "currency_exchange",
           "text": "Banks",
           "submenu": [
