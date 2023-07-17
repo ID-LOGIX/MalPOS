@@ -17,6 +17,13 @@ class CdRoleController extends Controller
         return response()->json($data);
     }
 
+    public function client_roles()
+    {
+        //
+        $data =  CdRole::where('role_type', 'client_role')->get();
+        return response()->json($data);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

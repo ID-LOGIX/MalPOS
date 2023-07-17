@@ -33,13 +33,13 @@ export default function OrderReceipt() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const [perPage] = useState(5);
+  const [perPage] = useState(10);
 
   const fetchAllReceipts = async () => {
     try {
       const response = await api.get("/order_receipts");
       setReceipts(response.data);
-      console.log(response);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -70,12 +70,10 @@ export default function OrderReceipt() {
   };
 
   const handlePaymentTypeChange = async (paymentType) => {
-    console.log(paymentType);
     setPaymentTypeFilter(paymentType);
     try {
       const response = await api.get(`/order_receipts/${paymentType}`);
       setReceipts(response.data);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -96,7 +94,6 @@ export default function OrderReceipt() {
     try {
       const response = await api.get(`/order_receipts/${statusType}`);
       setReceipts(response.data);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -242,7 +239,12 @@ export default function OrderReceipt() {
                       <Td>{receipt.order_type}</Td>
                       <Td>{receipt.order_amount}</Td>
                       <Td>{receipt.discount ? receipt.discount : "0.00"}</Td>
-                      <Td>{receipt.payment_type}</Td>
+                      <Td>
+                        {receipt.td_payment_detail
+                          .map((detail) => detail.tender_type)
+                          .join(", ")}
+                      </Td>
+
                       <Td>
                         <p
                           className={

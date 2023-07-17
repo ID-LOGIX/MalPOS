@@ -28,6 +28,8 @@ const CheckoutForm = ({ location, navigate }) => {
   const [printReceipt, setPrintReceipt] = useState(false);
   const [noPaymentClicked, setNoPaymentClicked] = useState(false);
   const [unit, setUnit] = useState("");
+  const [bankAccounts, setBankAccounts] = useState([]);
+  const [totalWithoutDiscount, setTotalWithoutDiscount] = useState(0);
 
   const [rowId, setRowId] = useState(null);
   const [orderId, setOrderId] = useState(null);
@@ -45,10 +47,11 @@ const CheckoutForm = ({ location, navigate }) => {
       tender_type: (payment.method || "").toString(),
       payment_amount: (payment.amount || "").toString(),
     }));
+    console.log(paidAmount);
     const orderData = {
       order_type: orderType.toString() || "",
-      payment_type: paymentMethod,
-      discount: (`${discount}${unit}` || "").toString(),
+      // payment_type: paymentMethod,
+      // discount: (`${discount}${unit}` || "").toString(),
       order_amount: (initialSubtotal + totalTax || "").toString(),
       status: "Paid",
       paidAmount,
@@ -58,15 +61,35 @@ const CheckoutForm = ({ location, navigate }) => {
         price: (product.product_price || "").toString(),
       })),
     };
-    console.log(orderData);
-    try {
-      // Send the order data to the API
 
-      const response = await api.post(`/checkout_order/${orderId}`, orderData);
-      toast.success("Order has been successfully placed!");
-      navigate("/orders-line");
-    } catch (error) {
-      toast.error("Something went wrong with your order.");
+    if (discount !== null && discount > 0) {
+      orderData.discount = (`${discount}${unit}` || "").toString();
+    } else {
+      orderData.discount = "0.00";
+    }
+
+    if (rowId !== null) {
+      try {
+        // Send the order data to the API
+
+        const response = await api.post(`/checkout_order/${rowId}`, orderData);
+        toast.success("Order has been successfully placed!");
+        navigate("/orders-line");
+      } catch (error) {
+        toast.error("Something went wrong with your order.");
+      }
+    } else {
+      try {
+        // Send the order data to the API
+        const response = await api.post(
+          `/checkout_order/${orderId}`,
+          orderData
+        );
+        toast.success("Order has been successfully placed!");
+        navigate("/orders-line");
+      } catch (error) {
+        toast.error("Something went wrong with your order.");
+      }
     }
 
     if (printReceipt) {
@@ -140,10 +163,12 @@ const CheckoutForm = ({ location, navigate }) => {
       setTotalTax(location.state?.totalTax);
       setDiscount(location.state?.discount);
       setUnit(location.state?.unit);
+      setInitialSubtotal(location.state?.totalWithoutDiscount);
       setOrderId(location.state?.orderId);
     }
   };
 
+  const totalWithDiscount = totalAmountWithTax - discount;
   const isPaymentSufficient = () => {
     // Calculate total payment amount
     const totalPaymentAmount = paymentMethods.reduce(
@@ -152,7 +177,7 @@ const CheckoutForm = ({ location, navigate }) => {
     );
 
     // Check if total payment amount equals to the amount to pay
-    return totalPaymentAmount === totalAmountWithTax;
+    return totalPaymentAmount === totalWithDiscount;
   };
   useEffect(() => {
     if (!didRun.current) {
@@ -165,12 +190,11 @@ const CheckoutForm = ({ location, navigate }) => {
     // Check if the array includes 'cash' and at least one other method
     if (
       paymentMethodsArray.includes("cash") &&
-      paymentMethodsArray.length > 1
+      paymentMethodsArray.length === 1
     ) {
-      // If so, update the payment method to 'card & cash'
-      setPaymentMethod("card & cash");
-    } else if (paymentMethodsArray.includes("cash")) {
       setPaymentMethod("cash");
+    } else if (paymentMethodsArray.includes("cash")) {
+      setPaymentMethod("card & cash");
     } else {
       setPaymentMethod("card");
     }
@@ -183,6 +207,15 @@ const CheckoutForm = ({ location, navigate }) => {
       return newMethods;
     });
   };
+
+  const getBankAccounts = async () => {
+    const res = await api.get(`/bank_account`);
+    setBankAccounts(res.data.data);
+  };
+
+  useEffect(() => {
+    getBankAccounts();
+  }, []);
 
   return (
     <>
@@ -214,7 +247,7 @@ const CheckoutForm = ({ location, navigate }) => {
                     className="bold fs-2"
                     style={{ color: "#F07632" }}
                   >
-                    {totalAmountWithTax} ریال
+                    {totalWithDiscount} ریال
                   </Text>
                 </Col>
               </Row>
@@ -267,98 +300,16 @@ const CheckoutForm = ({ location, navigate }) => {
                       Cash
                     </Button>
                   </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Card")}
-                    >
-                      Card
-                    </Button>
-                  </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Visa")}
-                    >
-                      Visa
-                    </Button>
-                  </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Cash
-                    </Button>
-                  </Col>
-                </Row>
-                <Row className="gx-2 gy-2">
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Cash
-                    </Button>
-                  </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Card
-                    </Button>
-                  </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Visa
-                    </Button>
-                  </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Cash
-                    </Button>
-                  </Col>
-                </Row>
-                <Row className="gx-2 gy-2 pb-4">
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Cash
-                    </Button>
-                  </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Card
-                    </Button>
-                  </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Visa
-                    </Button>
-                  </Col>
-                  <Col xs={12} sm={12} md={3} lg={3}>
-                    <Button
-                      className="btn btn-success btn-lg cus-checkout-btn"
-                      onClick={() => addPaymentMethod("Cash")}
-                    >
-                      Cash
-                    </Button>
-                  </Col>
+                  {bankAccounts.map((bank) => (
+                    <Col xs={12} sm={12} md={3} lg={3}>
+                      <Button
+                        className="btn btn-success btn-lg cus-checkout-btn"
+                        onClick={() => addPaymentMethod(bank.tender_type)}
+                      >
+                        {bank.tender_type}
+                      </Button>
+                    </Col>
+                  ))}
                 </Row>
               </Row>
 
@@ -415,7 +366,8 @@ const CheckoutForm = ({ location, navigate }) => {
           initialSubtotal={initialSubtotal}
           discount={discount}
           unit={unit}
-          amountToPay={amountToPay}
+          amountToPay={totalWithoutDiscount}
+          totalTax={totalTax}
         />
       </div>
     </>

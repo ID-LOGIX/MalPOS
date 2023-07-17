@@ -7,6 +7,7 @@ const ThermalInvoice = React.forwardRef((props, ref) => {
     discount,
     selectedProductsQty,
     unit,
+    totalTax,
   } = props;
 
   const getProductQuantity = (product, index) => {
@@ -15,6 +16,8 @@ const ThermalInvoice = React.forwardRef((props, ref) => {
     }
     return product.qty;
   };
+
+  const showDiscountUnit = discount !== null && discount > 0;
 
   return (
     <div ref={ref} className="text-center">
@@ -46,12 +49,12 @@ const ThermalInvoice = React.forwardRef((props, ref) => {
       </div>
 
       <div>
-        <p>Sub Total: {initialSubtotal} ریال</p>
+        <p>Total: {initialSubtotal + parseInt(totalTax)} ریال</p>
+        <p>Discount: {showDiscountUnit ? `${discount} ${unit}` : "0.00"}</p>
         <p>
-          Discount: {discount} {unit}
-        </p>
-        <p>
-          <strong>Total: {initialSubtotal - discount} ریال</strong>
+          <strong>
+            Sub Total: {initialSubtotal + parseInt(totalTax) - discount} ریال
+          </strong>
         </p>
       </div>
 

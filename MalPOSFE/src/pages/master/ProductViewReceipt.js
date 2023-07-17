@@ -73,6 +73,7 @@ export default function ProductViewReceipt({
         state: {
           selectedProducts: products,
           subtotal: discountedSubtotal,
+          totalWithoutDiscount: subtotal,
           totalTax: totalTax,
           orderType: orderType,
           discount: discount,
